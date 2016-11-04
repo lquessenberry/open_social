@@ -32,12 +32,12 @@ class AccountHeaderBlock extends BlockBase {
         // We need at least 2 active languages.
         if (count($languagelinks->links) > 1) {
           $links['lang'] = array(
-            'classes' => 'dropdown',
+            'classes' => 'dropdown hidden-xs',
             'link_attributes' => 'data-toggle=dropdown aria-expanded=true aria-haspopup=true role=button',
             'link_classes' => 'dropdown-toggle clearfix',
-            'icon_classes' => 'icon-globe',
+            'icon_classes' => 'icon-language',
             'title' => _social_language_get_current_language(),
-            'title_classes' => 'sr-only',
+            'title_classes' => 'navlabel-language',
             'url' => '#',
           );
 
