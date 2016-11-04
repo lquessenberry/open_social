@@ -20,11 +20,50 @@ class AccountHeaderBlock extends BlockBase {
    */
   public function build() {
     $account = \Drupal::currentUser();
+    $links = [];
     if ($account->id() !== 0) {
       $account_name = $account->getAccountName();
       $account_uid = $account->id();
 
-      $links = [
+      if (\Drupal::moduleHandler()->moduleExists('social_language')) {
+        // Fetch active languages.
+        $languagelinks = _social_language_get_language_links();
+
+        // We need at least 2 active languages.
+        if (count($languagelinks->links) > 1) {
+          $links['lang'] = array(
+            'classes' => 'dropdown',
+            'link_attributes' => 'data-toggle=dropdown aria-expanded=true aria-haspopup=true role=button',
+            'link_classes' => 'dropdown-toggle clearfix',
+            'icon_classes' => 'icon-globe',
+            'title' => _social_language_get_current_language(),
+            'title_classes' => 'sr-only',
+            'url' => '#',
+          );
+
+          /**
+           * @var $iso
+           * @var $languagelink
+           */
+          foreach ($languagelinks->links as $iso => $languagelink) {
+            /** @var Url $url */
+            $url = $languagelink['url'];
+
+            $links['lang']['below'][$iso] = array(
+              'classes' => '',
+              'link_attributes' => '',
+              'link_classes' => ($iso === _social_language_get_current_language()) ? 'active' : '',
+              'icon_classes' => '',
+              'icon_label' => '',
+              'title' => $languagelink['title'] . " (" . $iso . ")",
+              'title_classes' => '',
+              'url' => '/' . $iso . $url->toString(),
+            );
+          }
+        }
+      }
+
+      $links += [
         'add' => array(
           'classes' => 'dropdown',
           'link_attributes' => 'data-toggle=dropdown aria-expanded=true aria-haspopup=true role=button',
