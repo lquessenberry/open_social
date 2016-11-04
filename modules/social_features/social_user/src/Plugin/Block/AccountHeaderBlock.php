@@ -46,9 +46,6 @@ class AccountHeaderBlock extends BlockBase {
            * @var $languagelink
            */
           foreach ($languagelinks->links as $iso => $languagelink) {
-            /** @var Url $url */
-            $url = $languagelink['url'];
-
             $links['lang']['below'][$iso] = array(
               'classes' => '',
               'link_attributes' => '',
@@ -57,7 +54,7 @@ class AccountHeaderBlock extends BlockBase {
               'icon_label' => '',
               'title' => $languagelink['title'] . " (" . $iso . ")",
               'title_classes' => '',
-              'url' => '/' . $iso . $url->toString(),
+              'url' => '/' . (($iso === 'en') ? '' : $iso),
             );
           }
         }
