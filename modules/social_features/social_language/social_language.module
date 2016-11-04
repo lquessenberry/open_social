@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * The Social Language module.
+ */
+
+use \Drupal\Core\Url;
+
+function _social_language_get_language_links() {
+  /** @var \Drupal\Core\Language\LanguageManager $languageManager */
+  $languageManager = \Drupal::languageManager();
+  // Get current language in their language.
+  $route_name = '<front>';
+  $type = 'language_interface';
+  $links = $languageManager->getLanguageSwitchLinks($type, Url::fromRoute($route_name));
+
+  return $links;
+}
+
+function _social_language_get_current_language() {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  return $language;
+}

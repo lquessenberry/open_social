@@ -1,0 +1,9 @@
+name: 'Social Language'
+description: 'Language and Translate implementation in Open Social.'
+type: module
+core: 8.x
+dependencies:
+  - language
+  - locale
+  - config_translation
+package: Social
